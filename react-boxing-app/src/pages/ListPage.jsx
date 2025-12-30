@@ -6,38 +6,32 @@ import { getWikipediaImage } from "../services/getImageFromWikipedia.js";
 function ListPage() {
   const [fighters, setFighters] = useState([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const nomeCompleto = (f) => `${f.name.first} ${f.name.last}`;
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      try {
-        const data = await getAllChampions();
 
-        // adiciona imagem real automática
-        const enriched = await Promise.all(
-          data.map(async (fighter) => {
-            const fullName = nomeCompleto(fighter);
-            const wikiImage = await getWikipediaImage(fullName);
+      const data = await getAllChampions();
 
-            return {
-              ...fighter,
-              foto:
-                wikiImage ||
-                `https://picsum.photos/seed/${encodeURIComponent(fullName)}/400/400`,
-            };
-          })
-        );
+      const enriched = await Promise.all(
+        data.map(async (fighter) => {
+          const fullName = nomeCompleto(fighter);
+          const wikiImage = await getWikipediaImage(fullName);
 
-        setFighters(enriched);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
+          return {
+            ...fighter,
+            foto:
+              wikiImage ||
+              `https://picsum.photos/seed/${encodeURIComponent(fullName)}/400/400`,
+          };
+        })
+      );
+
+      setFighters(enriched);
+      setLoading(false); // ⬅️ loading acaba AQUI
     }
 
     fetchData();
@@ -51,41 +45,58 @@ function ListPage() {
     <div>
       <h2 className="mb-4">Lista de Lutadores</h2>
 
-      <input
-        type="text"
-        placeholder="Pesquisar lutador..."
-        className="form-control mb-4"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      {loading && (
+        <p className="text-center mt-5">
+          Carregando lutadores.....
+        </p>
+      )}
 
-      <div className="row g-4">
-        {fightersFiltrados.map((f) => {
-          const fullName = nomeCompleto(f);
+      {!loading && (
+        <>
+          <input
+            type="text"
+            placeholder="Pesquisar lutador..."
+            className="form-control mb-4"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-          return (
-            <div key={f.championId} className="col-md-3">
-              <div className="card shadow-sm">
-                <img
-                  src={f.foto}
-                  alt={fullName}
-                  className="card-img-top"
-                  style={{ height: "250px", objectFit: "cover" }}
-                />
-                <div className="card-body text-center">
-                  <h5 className="card-title">{fullName}</h5>
-                  <Link
-                    to={`/lutadores/${f.championId}`}
-                    className="btn btn-dark w-100 mt-2"
-                  >
-                    Ver Detalhes
-                  </Link>
+          <div className="row g-4">
+            {fightersFiltrados.map((f) => {
+              const fullName = nomeCompleto(f);
+
+              return (
+                <div key={f.championId} className="col-md-3">
+                  <div className="card shadow-sm">
+                 <div className="position-relative">
+  <img
+    src={f.foto}
+    alt={fullName}
+    className="card-img-top"
+    style={{ height: "250px", objectFit: "cover" }}
+    loading="lazy"
+  />
+  <div className="position-absolute bottom-0 w-100 p-2"
+       style={{ background: "linear-gradient(transparent, rgba(0,0,0,0.9))" }}>
+  </div>
+</div>
+
+                    <div className="card-body text-center">
+                      <h5 className="card-title">{fullName}</h5>
+                      <Link
+                        to={`/lutadores/${f.championId}`}
+                        className="btn btn-dark w-100 mt-2"
+                      >
+                        Ver Detalhes
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -44,6 +44,10 @@ function DetailPage() {
     const fullName = name.first + ' ' + name.last;
 
     return (
+
+
+
+      
       <div>
         <h2>{fullName}</h2>
         <p><strong>Data de Nascimento:</strong> {born}</p>

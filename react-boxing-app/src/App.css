@@ -1,56 +1,212 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* RESET E BODY */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #c96767 0%, #663b3b 60%);
+  color: #e0e0e0; /* cor branca suave e legível */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1.15rem; /* texto normal maior */
+  line-height: 1.7;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1400px;
+}
+
+/* NAVBAR */
+.navbar {
+  background: linear-gradient(90deg, #0a0a0a, #111);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 1.5rem 1.5rem;
+}
+
+.navbar-brand {
+  font-weight: 900;
+  letter-spacing: 3px;
+  font-size: 2rem; /* maior */
+  color: #f0f0f0; /* branco suave, sem gradiente */
+}
+
+.nav-link {
+  opacity: 0.8;
+  font-weight: 600;
+  font-size: 1.3rem; /* links maiores */
+  transition: all 0.3s ease;
+  position: relative;
+  color: #e0e0e0;
+}
+
+.nav-link:hover, .nav-link.active {
+  opacity: 1;
+  color: #dc2626;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -6px;
+  left: 50%;
+  background: #dc2626;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+  left: 0;
+}
+
+/* TÍTULOS GRANDES E SUAVES */
+h1 {
+  font-size: 4.5rem; /* enorme na home */
+  font-weight: 900;
+  color: #f0f0f0;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 3.2rem; /* maior na lista e detalhes */
+  font-weight: 800;
+  color: #f0f0f0;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+h4 {
+  font-size: 2rem;
+  color: #dc2626; /* vermelho só nos subtítulos para destaque */
+  margin: 3rem 0 1.5rem;
+}
+
+/* INPUT DE BUSCA */
+.search-container {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.search-container input.form-control {
+  background: rgba(15, 15, 15, 0.9);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  padding-left: 3.8rem;
+  height: 60px;
+  font-size: 1.3rem; /* texto dentro maior */
+  backdrop-filter: blur(10px);
+}
+
+.search-container input.form-control:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2);
+}
+
+.search-container::before {
+  content: "🔍";
+  position: absolute;
+  left: 1.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.6rem;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+/* CARDS */
+.card {
+  background: linear-gradient(180deg, #121212, #0a0a0a);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 40px 80px rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+.card-img-wrapper {
+  position: relative;
+  height: 300px;
+}
+
+.card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.card:hover .card-img-wrapper img {
+  transform: scale(1.12);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.95));
+  padding: 4rem 1rem 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.card-title {
+  font-size: 1.8rem; /* nome do lutador bem grande */
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+  color: #f0f0f0;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-dark {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  font-size: 1.2rem; /* botão maior */
+  transition: all 0.3s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.btn-dark:hover {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(220, 38, 38, 0.4);
 }
 
-.card {
-  padding: 2em;
+/* PÁGINA DE DETALHES */
+.detail-card {
+  background: linear-gradient(180deg, #151515, #0b0b0b);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 3rem;
+  max-width: 1000px;
+  margin: 2rem auto;
+  font-size: 1.3rem; /* textos maiores */
 }
 
-.read-the-docs {
-  color: #888;
+.detail-card p, .detail-card li {
+  margin-bottom: 1.2rem;
+  color: #e0e0e0;
 }
 
-.fighter-card {
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-
-
-
-/* Hover effect for fighter cards */
-
-.fighter-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+/* FOOTER */
+footer {
+  background: #000;
+  border-top: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 2rem 0;
+  margin-top: 6rem;
+  font-size: 1.1rem;
+  color: #aaa;
 }
