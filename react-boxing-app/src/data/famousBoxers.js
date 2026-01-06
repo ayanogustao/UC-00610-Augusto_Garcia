@@ -79,5 +79,5 @@ export const FAMOUS_BOXERS = [
   "WBA",
   "IBF",
   "WBO",
-  // (sim, meti algumas variações pro search acertar mais vezes)
+  // da para aumentar mais a listam ela foi diminuida pois estava muito grande e lenta.
 ];

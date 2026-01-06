@@ -59,7 +59,7 @@ export async function getWikipediaImage(name) {
     if (bestTitle) img = await getThumbFromTitle(bestTitle);
   }
 
-  // guardar cache (mesmo null, pra não spammar)
+  // guardar cache (mesmo null para evitar repetir pedidos falhados)
   memCache.set(name, img);
   sessionStorage.setItem(key, img || "");
   return img || null;
